@@ -22,7 +22,7 @@ conda install pytorch-cluster -c pyg
 pip install scipy
 pip install rdkit-pypi
 
-git clone https://github.com/xyc1207/TamGent.git
+git clone https://github.com/AlphaGenX/TamGent.git
 cd TamGent
 git checkout main
 python -m pip install -e .[chem]
