@@ -117,7 +117,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 worker = TamGenDemo(
     data="./TamGen_Demo_Data",
     ckpt="checkpoints/crossdock_pdb_A10/checkpoint_best.pt"
-    use_conditional=True,
 )
 ```
 
