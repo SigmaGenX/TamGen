@@ -13,19 +13,10 @@ modeling and other text generation tasks.
 # Installation
 
 ```bash
-conda create -n TamGen python=3.8
+conda create -n TamGen python=3.9
 conda activate TamGen
 
-conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
-conda install pyg -c pyg
-conda install pytorch-cluster -c pyg
-pip install scipy
-pip install rdkit-pypi
-
-git clone https://github.com/AlphaGenX/TamGent.git
-cd TamGent
-git checkout main
-python -m pip install -e .[chem]
+bash install_env.sh
 ```
 
 # Dataset
@@ -116,3 +107,20 @@ The generated compounds, docking score and related analysis can be find in `comp
 
 We provide a demo at `interactive_decode.ipynb`
 
+In the first cell of the demo 
+```
+from TamGen_Demo import TamGenDemo, prepare_pdb_data
+import os
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
+worker = TamGenDemo(
+    data="./TamGen_Demo_Data",
+    ckpt="checkpoints/crossdock_pdb_A10/checkpoint_best.pt"
+    use_conditional=True,
+)
+```
+
+- Specify the GPU id
+- Download the checkpoint and place it into "checkpoints/crossdock_pdb_A10/checkpoint_best.pt" or your specificied position
+- Download the pre-trained GPT model and put it into the folder `gpt_model`

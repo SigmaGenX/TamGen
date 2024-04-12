@@ -57,7 +57,9 @@ def filter_generated_cmpd(smi):
     sssr = Chem.GetSymmSSSR(m)
     if len(sssr) <= 1:
         return None
-    if len(sssr) >= 8:
+    if len(sssr) >= 4:
+        return None
+    if smi.lower().count('p') > 3:
         return None
     s = Chem.MolToSmiles(m)
     return s, m
@@ -66,7 +68,9 @@ class TamGenDemo:
     def __init__(
             self, 
             ckpt="checkpoints/crossdock_pdb_A10/checkpoint_best.pt", 
-            data="TamGent_Demo_Data"):
+            data="TamGent_Demo_Data",
+            use_conditional=True
+            ):
         
         input_args = [
             data,
@@ -77,8 +81,9 @@ class TamGenDemo:
             "--seed", "1", 
             "--sample-beta", "1",
             "--use-src-coord", 
-            "--gen-vae" 
         ]  
+        if use_conditional:
+            input_args.append("--gen-vae")
         parser = options.get_generation_parser()
         args = options.parse_args_and_arch(parser, input_args)
 
@@ -158,11 +163,11 @@ class TamGenDemo:
             num_workers=self.args.num_workers,
         ).next_epoch_itr(shuffle=False)
 
-    def sample(self, m_sample=50, use_cuda=True, toolcompound=None, customer_filter_fn=None):
+    def sample(self, m_sample=50, use_cuda=True, toolcompound=None, customer_filter_fn=None,maxseed=101):
         if toolcompound is not None:
             toolcompound = Chem.MolFromSmiles(toolcompound)
         results_set = {}
-        for seed in tqdm(range(1,101),total=100):
+        for seed in tqdm(range(1,maxseed),total=maxseed):
             if len(results_set) > m_sample:
                 break
             torch.manual_seed(seed)
