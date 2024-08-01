@@ -13,7 +13,7 @@ modeling and other text generation tasks.
 # Installation
 
 ```bash
-conda create -n TamGen python=3.9
+conda create -n TamGen python=3.10 #Both 3.9 and 3.10 are fine
 conda activate TamGen
 
 bash install_env.sh
