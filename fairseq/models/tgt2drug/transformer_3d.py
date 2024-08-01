@@ -496,7 +496,7 @@ class Encoder3D(FairseqEncoder):
         if (self.training or (not self.training and self.gen_vae)) and (tgt_tokens is not None):
             vae_encoder_out = self.vae_encoder(src_tokens, tgt_tokens, src_coord=src_coord, tgt_coord=tgt_coord)
             mean, logstd = torch.chunk(vae_encoder_out, chunks=2, dim=-1)
-            z = mean + torch.exp(logstd) * torch.randn_like(mean)
+            z = mean + torch.exp(logstd) * torch.randn_like(mean) * self.sample_beta
         else:
             z = torch.randn_like(main_encoder_out['encoder_out']) * self.sample_beta
             mean, logstd = None, None
