@@ -16,7 +16,7 @@ modeling and other text generation tasks.
 conda create -n TamGen python=3.9
 conda activate TamGen
 
-bash install_env2.sh
+bash setup_env.sh
 ```
 
 # Dataset
