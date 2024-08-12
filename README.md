@@ -84,6 +84,21 @@ You can build your customized dataset through the following methods:
 
    For customized pdb strcuture files, you can put your structure files to the `--pdb-path` folder, and in the `PDB_ID_LIST` csv file, put the filenames in the `pdb_id` column.
 
+5. Build crossdocked dataset from crossdocked's original data.
+
+   ```bash
+   export CROSSDOCK_PATH=/path/to/crossdock/data
+   export OUTPUT_PATH=/path/to/output/data
+   cd $CROSSDOCK_PATH
+   pip install gdown
+   gdown https://drive.google.com/uc?id=1mycOKpphVBQjxEbpn1AwdpQs8tNVbxKY
+   gdown https://drive.google.com/uc?id=10KGuj15mxOJ2FBsduun2Lggzx0yPreEU
+   tar -xzvf crossdocked_pocket10.tar.gz
+   python scripts/build_data/prepare_crossdock.py ${CROSSDOCK_PATH} -o ${OUTPUT_PATH}
+   ```
+
+   `CROSSDOCK_PATH` is the path to the original crossdocked data.
+
 # Model
 The checkpoint can be found in the provided url from the paper. You should unzip it, and place it under the folder `TamGen/`
 

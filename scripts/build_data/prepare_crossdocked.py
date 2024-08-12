@@ -48,7 +48,7 @@ def _get_dataset_split() -> DatasetEntrySplit:
     Train: 100000
     Test: 100
     """
-    split_fn = DATASET_ROOT / 'split_by_name.pt'
+    split_fn = CROSSDOCK_PATH / 'split_by_name.pt'
     data = torch.load(split_fn)
     return data
 
@@ -57,7 +57,7 @@ def _get_test_list() -> DataEntryList:
     """Get test list.
 
     Equal to dataset_split['test']."""
-    test_list_fn = DATASET_ROOT / 'test_list.tsv'
+    test_list_fn = CROSSDOCK_PATH / 'test_list.tsv'
     with test_list_fn.open('r', encoding='utf-8') as f_test_list:
         reader = csv.reader(f_test_list, dialect=csv.excel_tab)
         next(reader)
@@ -70,8 +70,8 @@ ResidueInfo = namedtuple('ResidueInfo', 'chain_id res_id res_code pos')
 
 
 def _process_one_data_entry(subset_name: str, index: int, pocket_fn: str, ligand_fn: str) -> Optional[Dict]:
-    pocket_path = DATASET_ROOT / 'crossdocked_pocket10' / pocket_fn
-    ligand_path = DATASET_ROOT / 'crossdocked_pocket10' / ligand_fn
+    pocket_path = CROSSDOCK_PATH / 'crossdocked_pocket10' / pocket_fn
+    ligand_path = CROSSDOCK_PATH / 'crossdocked_pocket10' / ligand_fn
 
     # Get PDB ID and Chain ID.
     pocket_words = pocket_fn.split('/')[1].split('_')
@@ -216,19 +216,19 @@ def _dump(subset_name: str, all_data: List[Optional[Dict]], fairseq_root: Path, 
     structure_file_dir.mkdir(exist_ok=True)
     for new_index, data in enumerate(tqdm(all_data)):
         copyfile_if_not_exist(
-            DATASET_ROOT / 'crossdocked_pocket10' / data['pocket_fn'], structure_file_dir / f'{new_index}-protein.pdb', quiet=True)
+            CROSSDOCK_PATH / 'crossdocked_pocket10' / data['pocket_fn'], structure_file_dir / f'{new_index}-protein.pdb', quiet=True)
         copyfile_if_not_exist(
-            DATASET_ROOT / 'crossdocked_pocket10' / data['ligand_fn'], structure_file_dir / f'{new_index}-ligand.sdf', quiet=True)
+            CROSSDOCK_PATH / 'crossdocked_pocket10' / data['ligand_fn'], structure_file_dir / f'{new_index}-ligand.sdf', quiet=True)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset-root', type=Path, default=Path(r'/home/v-wukehan/workdir/TamGent/data'))
-    parser.add_argument('--output-dir', type=Path, default=Path(r'/home/v-wukehan/workdir/TamGent/dataset/crossdocked_202408'))
+    parser.add_argument('crossdocked_path', type=Path, default=Path(r'data'))
+    parser.add_argument('-o', '--output-dir', type=Path, default=Path(r'dataset/crossdocked'))
     args = parser.parse_args()
     
-    global DATASET_ROOT, OUTPUT_DIR
-    DATASET_ROOT = args.dataset_root
+    global CROSSDOCK_PATH, OUTPUT_DIR
+    CROSSDOCK_PATH = args.crossdocked_path
     OUTPUT_DIR = args.output_dir
     
     smu.disable_rdkit_log()
