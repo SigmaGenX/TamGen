@@ -94,6 +94,7 @@ You can build your customized dataset through the following methods:
    gdown https://drive.google.com/uc?id=1mycOKpphVBQjxEbpn1AwdpQs8tNVbxKY
    gdown https://drive.google.com/uc?id=10KGuj15mxOJ2FBsduun2Lggzx0yPreEU
    tar -xzvf crossdocked_pocket10.tar.gz
+   cd $YOUR_PATH_TO_TamGen
    python scripts/build_data/prepare_crossdock.py ${CROSSDOCK_PATH} -o ${OUTPUT_PATH}
    ```
 
