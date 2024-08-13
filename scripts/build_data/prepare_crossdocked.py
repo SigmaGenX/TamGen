@@ -162,16 +162,16 @@ def _dump(subset_name: str, all_data: List[Optional[Dict]], fairseq_root: Path, 
     pairs_fn = OUTPUT_DIR / f'{subset_name}-info.csv'
     with pairs_fn.open('w', encoding='utf-8') as f_pairs:
         writer = csv.writer(f_pairs)
-        writer.writerow(['pdb_id', 'chain_id', 'chain_fasta', 'ligand_inchi', 'real_chain_ids', 'orig_index'])
+        writer.writerow(['dataset', 'index', 'pdb_id', 'chain_id', 'ligand_inchi','real_chain_ids'])
 
         for data in all_data:
             writer.writerow([
-                data['pdb_id'],
-                data['chain_id'],
-                data['sequence'],
-                data['ligand_inchi'],
-                ';'.join(data['real_chain_ids']),
-                data['index'],
+                f'CrossDocked-{subset_name}', 
+                data['index'], 
+                data['pdb_id'], 
+                data['chain_id'], 
+                data['ligand_inchi'], 
+                data['real_chain_ids'],
             ])
             
     # tg.
@@ -240,17 +240,40 @@ def main():
     for subset_name in ['train', 'test']:
         structure_file_dir = OUTPUT_DIR / f'structure-files-{subset_name}'
         structure_file_dir.mkdir(exist_ok=True)
-
+        
+        # make the last 100 samples in the training set as validation set
         subset_entries = dataset_split[subset_name]
-        all_data = []
-        for index, entry in enumerate(tqdm(subset_entries)):
-            data = _process_one_data_entry(subset_name, index, *entry)
-            all_data.append(data)
+        if subset_name == 'train':
+            train_entries = subset_entries[:-100]
+            valid_entries = subset_entries[-100:]
 
-        _dump(subset_name, all_data,
-              fairseq_root=Path(parent(parent(parent(__file__)))), 
-              pre_dicts_root=Path(parent(parent(parent(__file__)))) / 'dict', 
-              max_len=1023)
+            all_train_data = []
+            for index, entry in enumerate(tqdm(train_entries)):
+                data = _process_one_data_entry(subset_name, index, *entry)
+                all_train_data.append(data)
+            _dump('train', all_train_data,
+                fairseq_root=Path(parent(parent(parent(__file__)))),
+                pre_dicts_root=Path(parent(parent(parent(__file__)))) / 'dict',
+                max_len=1023)
+
+            all_valid_data = []
+            for index, entry in enumerate(tqdm(valid_entries)):
+                data = _process_one_data_entry('valid', index, *entry)
+                all_valid_data.append(data)
+            _dump('valid', all_valid_data,
+                fairseq_root=Path(parent(parent(parent(__file__)))),
+                pre_dicts_root=Path(parent(parent(parent(__file__)))) / 'dict',
+                max_len=1023)
+
+        else:
+            all_test_data = []
+            for index, entry in enumerate(tqdm(subset_entries)):
+                data = _process_one_data_entry(subset_name, index, *entry)
+                all_test_data.append(data)
+            _dump('test', all_test_data,
+                fairseq_root=Path(parent(parent(parent(__file__)))),
+                pre_dicts_root=Path(parent(parent(parent(__file__)))) / 'dict',
+                max_len=1023)
 
 
 if __name__ == '__main__':
