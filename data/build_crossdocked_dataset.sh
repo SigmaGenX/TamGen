@@ -10,3 +10,5 @@ gdown https://drive.google.com/uc?id=10KGuj15mxOJ2FBsduun2Lggzx0yPreEU
 tar -xzvf crossdocked_pocket10.tar.gz
 cd $TAMGEN_FOLDER
 python scripts/build_data/prepare_crossdocked.py "data/"${CROSSDOCK_PATH} -o "data/"${OUTPUT_PATH}
+cd data
+python dump_coord.py $OUTPUT_PATH
