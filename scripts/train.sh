@@ -145,7 +145,7 @@ if $RunTrain; then
     --move-to-origin \
     --random-rotation \
     --max-epoch 200 \
-    --update-freq 32 \
+    --update-freq 2 \
     --save-dir $savedir \
     --train-subset $trainset \
     --valid-subset $validset \

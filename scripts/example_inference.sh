@@ -3,12 +3,10 @@ beta=1.0    # the beta of the VAE
 seed=42     # the random seed used for decoding
 
 DATAPATH="data/crossdocked/bin/"
-CKPTPATH="/home/yinxia/blob1.v2/v-kehanwu/TamGent/model/crossdocked_model/checkpoint_best.pt"
-CKPTPATH="/home/yinxia/S/TamGen/xxx111-fp16/checkpoint_best.pt"
+CKPTPATH="checkpoints/crossdocked_model/checkpoint_best.pt"
 
 tmpfile=$(mktemp tmpout_file.XXXXXX)
 outF="output.csv"
-outF="output2.csv"
 
 python generate.py \
 $DATAPATH \

@@ -21,84 +21,51 @@ bash setup_env.sh
 
 # Dataset
 
+## Build training data for CrossDocked dataset
+Please refer to the [README](data/README.md) in the folder `data`
+
 ## Build customized dataset
 
 You can build your customized dataset through the following methods:
 
-1. Build customized dataset based on pdb ids, the script will automatically find the binding sites according to the ligands in the structure file.
+1. Build customized dataset based on pdb ids using the center coordinates of the binding site of each pdb.
+
+   ```bash
+   python scripts/build_data/prepare_pdb_ids_center.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} -t ${THRESHOLD}
+   ```
+
+   - `PDB_ID_LIST` format: CSV format with the following columns: `pdb_id,center_x,center_y,center_z,[uniprot_id]`. `[uniprot_id]` is optional.
+
+   - `DATASET_NAME`: You could specify it by yourselv. The simplest way is to set it as `test`. 
+   - `OUTPUT_PATH`:  The output path of the processed data.
+   - `THRESHOLD`: The radius of the pocket region whose center is `center_x,center_y,center_z`.
+
+2. Build customized dataset based on pdb ids, the script will automatically find the binding sites according to the ligands in the structure file.
 
    ```bash
    python scripts/build_data/prepare_pdb_ids.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} -t ${threshold}
    ```
 
-   `PDB_ID_LIST` format: CSV format with columns ([] means optional):
+   - `PDB_ID_LIST` format: CSV format with columns `pdb_id,[ligand_inchi,uniprot_id]`, where `[]` means optional.
+   - `THRESHOLD`: The `THRESHOLD` parameter defines the boundary of pocket regions. Any protein residue whose center lies within `THRESHOLD` angstroms of a ligand atom is considered part of the pocket region. For a given `pdb_id`, its associated ligands can be found in [database/PdbCCD](database/PdbCCD).
+   - The remaining parameters are the same as those in method 1.
 
-   `pdb_id,[ligand_inchi,uniprot_id]`
-2. Build customized dataset based on pdb ids using the center coordinates of the binding site of each pdb.
 
-   ```bash
-   python scripts/build_data/prepare_pdb_ids_center.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} -t ${threshold}
-   ```
-
-   `PDB_ID_LIST` format: CSV format with columns ([] means optional):
-
-   `pdb_id, center_x, center_y, center_z, [uniprot_id]`
 3. Build customized dataset based on pdb ids using the center coordinates of the binding site of each pdb, and add the provided scaffold to each center
 
    ```bash
    python scripts/build_data/prepare_pdb_ids_center_scaffold.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} -t ${threshold} --scaffold-file ${SCAFFOLD_FILE}
    ```
 
-   `PDB_ID_LIST` format: CSV format with columns ([] means optional):
+   - `SCAFFOLD_FILE`:  It contains molecular scaffolds that will be incorporated into the processed database. These scaffolds serve as structural templates for subsequent conditional generation of new molecules.
+   - The remaining parameters are the same as those in method 1.
 
-   `pdb_id, center_x, center_y, center_z, [uniprot_id]`
-4. Build dataset from PDB ID list using the residue ids(indexes) of the binding site of each pdb.
-
-   ```bash
-   python scripts/build_data/prepare_pdb_ids_res_ids.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} --res-ids-fn ${RES_IDS_FN}
-   ```
-
-   `PDB_ID_LIST` format: CSV format with columns ([] means optional):
-
-   `pdb_id,[uniprot_id]`
-
-   `RES_IDS_FN` format: residue ids filename, a dict like:
-
-   ```python
-   {
-     0:
-       {
-         chain_id_A: Array[res_id_A1, res_id_A2, ...],
-         chain_id_B: Array[res_id_B1, res_id_B2, ...],
-         ...
-       },
-     1:
-       {
-         ...
-       },
-     ...
-   }  
-   ```
-
-   stored as pickle file. The order is the same as `PDB_ID_LIST`.
 
    For customized pdb strcuture files, you can put your structure files to the `--pdb-path` folder, and in the `PDB_ID_LIST` csv file, put the filenames in the `pdb_id` column.
 
-5. Build crossdocked dataset from crossdocked's original data.
+   We provide an example about how to build and use customized data in [customized_example](./customized_example).
 
-   ```bash
-   export CROSSDOCK_PATH=/path/to/crossdock/data
-   export OUTPUT_PATH=/path/to/output/data
-   cd $CROSSDOCK_PATH
-   pip install gdown
-   gdown https://drive.google.com/uc?id=1mycOKpphVBQjxEbpn1AwdpQs8tNVbxKY
-   gdown https://drive.google.com/uc?id=10KGuj15mxOJ2FBsduun2Lggzx0yPreEU
-   tar -xzvf crossdocked_pocket10.tar.gz
-   cd $YOUR_PATH_TO_TamGen
-   python scripts/build_data/prepare_crossdock.py ${CROSSDOCK_PATH} -o ${OUTPUT_PATH}
-   ```
 
-   `CROSSDOCK_PATH` is the path to the original crossdocked data.
 
 # Model
 The checkpoint can be found in the provided url from the paper. You should unzip it, and place it under the folder `TamGen/`
@@ -106,16 +73,21 @@ The checkpoint can be found in the provided url from the paper. You should unzip
 
 # Run scripts
 
+## Training
 ```bash
 # train a new model
 bash scripts/train.sh -D ${DATA_PATH} --savedir ${SAVED_MODEL_PATH}
-
-# generate molecules
-bash scripts/generate.sh -b ${BEAM_SIZE} -s ${SEED} -D ${DATA_PATH} --dataset ${TESTSET_NAME} --ckpt ${MODEL_PATH} --savedir ${OUTPUT_PATH}
-
 ```
 
-# Results
+For example, one can run `bash scripts/train.sh -D data/crossdocked/bin/ --savedir crossdock_train --fp16` to train models.
+
+## Inference
+One can refer to `scripts/generate.sh` for running inference code.
+
+We provide an example by running `bash scripts/example_inference.sh`
+
+
+## Results
 
 The generated compounds, docking score and related analysis can be find in `compare_different_methods.ipynb`
 
