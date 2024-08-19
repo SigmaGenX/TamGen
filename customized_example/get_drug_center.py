@@ -77,9 +77,9 @@ def get_center(ligand_group, excludeH=False):
 #%% 
 # %%
 
-pdbfn = r"4xli"
+pdbfn = r"7vh8"
 ligand_group = process_file(f"{pdbfn}.cif")
-atom_filter(ligand_group, "S")
+atom_filter(ligand_group, "F")
 centers = get_center(ligand_group)
 centers_noH = get_center(ligand_group, excludeH=True)
 
@@ -100,3 +100,5 @@ for ele in centers:
 
 df = pd.DataFrame.from_dict(data_dict)
 df.to_csv(f"{pdbfn}_out.csv")
+
+# %%

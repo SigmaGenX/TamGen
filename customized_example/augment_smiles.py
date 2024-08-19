@@ -7,12 +7,12 @@ import numpy as np
 from rdkit.Chem import rdDepictor  
 import random  
 
-pdbid = r"4xli"
+pdbid = r"7vh8"
 
-# in all_lines, it is the smiles of the ligand of 4xli
-# I copy it from `https://pubchem.ncbi.nlm.nih.gov/compound/3062316#section=Canonical-SMILES`
+# in all_lines, it is the smiles of the ligand of 7vh8
+# I copy it from `https://pubchem.ncbi.nlm.nih.gov/compound/156621364`
 all_lines = [
-    'CC1=C(C(=CC=C1)Cl)NC(=O)C2=CN=C(S2)NC3=CC(=NC(=N3)C)N4CCN(CC4)CCO'
+    'CC1([C@@H]2[C@H]1[C@H](N(C2)C(=O)[C@H](C(C)(C)C)NC(=O)C(F)(F)F)C(=O)N[C@@H](C[C@@H]3CCNC3=O)C=N)C'
 ]
 
 mols = [Chem.MolFromSmiles(e) for e in all_lines]

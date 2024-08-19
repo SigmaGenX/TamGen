@@ -5,7 +5,7 @@ testset="test"
 task=translation_coord
 ckpt="./checkpoints/crossdock_pdb_A10/checkpoint_best.pt"
 
-results_folder="customized_example/4xli-results"
+results_folder="customized_example/7vh8-results"
 
 mkdir -p $results_folder
 
@@ -13,7 +13,7 @@ global_idx=0
 
 for thr in "10" "12"; do
 for beta in "1.0" "0.1"; do
-datadir="customized_example/4xli-bin/t${thr}"
+datadir="customized_example/7vh8-bin/t${thr}"
 global_idx=$((global_idx+1))
 log_file="logs_thr${thr}_beta${beta}_Globalid${global_idx}"
 

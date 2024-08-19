@@ -108,7 +108,7 @@ def fix_CNO(smi):
 all_results = {}
 success, total = 0, 0
 
-pdb_idx = "4xli"
+pdb_idx = "7vh8"
 for prefix in ["nonvae", "vae"]:
 
     FF = glob(f"{pdb_idx}-results/{prefix}*")
