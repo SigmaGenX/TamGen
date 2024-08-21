@@ -54,7 +54,7 @@ You can build your customized dataset through the following methods:
 3. Build customized dataset based on pdb ids using the center coordinates of the binding site of each pdb, and add the provided scaffold to each center
 
    ```bash
-   python scripts/build_data/prepare_pdb_ids_center_scaffold.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} -t ${threshold} --scaffold-file ${SCAFFOLD_FILE}
+   python scripts/build_data/prepare_pdb_ids_center_scaffold.py ${PDB_ID_LIST} ${DATASET_NAME} -o ${OUTPUT_PATH} -t ${THRESHOLD} --scaffold-file ${SCAFFOLD_FILE}
    ```
 
    - `SCAFFOLD_FILE`:  It contains molecular scaffolds that will be incorporated into the processed database. These scaffolds serve as structural templates for subsequent conditional generation of new molecules.
