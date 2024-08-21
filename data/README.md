@@ -42,4 +42,4 @@ After running `build_crossdocked_dataset.sh`  in the `data` folder, you should g
         ├── crossdocked_pocket10.tar.gz
         └── split_by_name.pt
    ```
-   We also upload the processed data at XXX.
+   We also update a copy of the processed data, which can be accessed via the link provided in the manuscript.

@@ -98,11 +98,6 @@ One can refer to `scripts/generate.sh` for running inference code.
 
 We provide an example by running `bash scripts/example_inference.sh`
 
-
-## Results
-
-The generated compounds, docking score and related analysis can be find in `compare_different_methods.ipynb`
-
 # Demo
 
 We provide a demo at `interactive_decode.ipynb`
