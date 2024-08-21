@@ -47,7 +47,7 @@ You can build your customized dataset through the following methods:
    ```
 
    - `PDB_ID_LIST` format: CSV format with columns `pdb_id,[ligand_inchi,uniprot_id]`, where `[]` means optional.
-   - `THRESHOLD`: The `THRESHOLD` parameter defines the boundary of pocket regions. Any protein residue whose center lies within `THRESHOLD` angstroms of a ligand atom is considered part of the pocket region. For a given `pdb_id`, its associated ligands can be found in [database/PdbCCD](database/PdbCCD).
+   - `THRESHOLD`: A residue $r$ is considered part of the pocket region, if any atom in $r$ lies within THRESHOLD angstroms of a ligand atom. For a given `pdb_id`, its associated ligands can be found in [database/PdbCCD](database/PdbCCD).
    - The remaining parameters are the same as those in method 1.
 
 
