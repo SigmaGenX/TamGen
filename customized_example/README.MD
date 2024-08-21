@@ -2,7 +2,7 @@
 
 We provide a customized example about how to generate compounds for a given pocket.
 
-We choose the pdb `7te0` as an example.
+We choose the pdb `7vh8` as an example.
 
 
 ## Steps
