@@ -1,14 +1,12 @@
 # TamGen
 
-Target-aware Molecule Generation for Drug Design Using a Chemical Language Model
+TamGen: Target-aware Molecule Generation for Drug Design Using a Chemical Language Model
 
 # Introduction
 
-Code base: [fairseq-v0.8.0](https://github.com/facebookresearch/fairseq)
+This is the implementation of the paper `TamGen: Target-aware Molecule Generation for Drug Design Using a Chemical Language Model`. 
 
-Fairseq(-py) is a sequence modeling toolkit that allows researchers and
-developers to train custom models for translation, summarization, language
-modeling and other text generation tasks.
+Our implementation is built on [fairseq-v0.8.0](https://github.com/facebookresearch/fairseq)
 
 # Installation
 
