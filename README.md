@@ -66,7 +66,7 @@ You can build your customized dataset through the following methods:
 
 
 # Model
-The checkpoint can be found in the provided url from the paper, which is `TamGen.ckpt.tar.gz `. You should run `tar xzf TamGen.ckpt.tar.gz` to uncompress it. After uncompression, you will get two folders: `checkpoints` and `gpt_model`. Please place them under the folder `TamGen/`. The structures of the two folders are shown below:
+The checkpoint can be found in `https://doi.org/10.5281/zenodo.13751391`. Please download `checkpoints.zip` & `gpt_model.zip` and uncompress them. After that, you will get two folders: `checkpoints` and `gpt_model`. Please place them under the folder `TamGen/`. The structures of the two folders are shown below:
 ```bash
 checkpoints/
 ├── README.MD
