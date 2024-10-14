@@ -1,4 +1,0 @@
-targetdiff: CC1=CC2C(O)C(C)N=NCC3=C=C4CCC(=NC(=O)NC(O)(C5=CCC(O)=C(F)C5)C(O)C(=O)NC(=O)CC3C2C=C1)C4
-pocket2mol:CN1C(=O)C2=CCC3=C4C5=C(CN(C6CCN(C(=O)N7CC(=O)C8=CC=CC=C8C7=O)C6)C(=O)N5CC(C1=O)C24)NC3=O
-resgen:CN1C(=O)Cc2cc3c(c4ncnc1c24)N=C(CNC(=O)c1c(Cc2ccccc2)ccc2c1NCC2)C3
-ours: O=C1[C@@H](NS(=O)(=O)c2ccc3cc(Cl)ccc3c2)CCN1c1ccc([C@H]2CCCN2)nc1F
