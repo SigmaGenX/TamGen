@@ -2,6 +2,8 @@
 
 TamGen: Target-aware Molecule Generation for Drug Design Using a Chemical Language Model
 
+Note: This repository will no longer be updated. For the latest updates and developments, please visit the official repository at `https://github.com/microsoft/tamgen`.
+
 # Introduction
 
 This is the implementation of the paper `TamGen: Target-aware Molecule Generation for Drug Design Using a Chemical Language Model`. 
